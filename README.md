@@ -90,11 +90,11 @@ E executar o `nano` para editar os parâmetros:
 ```
 nano postgresql.conf
 ```
->Utilize o `Ctrl W` para procurar os parâmetros.
+>Utilize o **Ctrl W** para procurar os parâmetros.
 
->Caso os parâmetros estejam comentados com hashtag `#` remover a hashtag.
+>Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.
 
->Finalizando as alterações `Ctrl O` para salvar e `Ctrl X` para fechar.
+>Finalizando as alterações **Ctrl O** para salvar e **Ctrl X** para fechar.
 
 Para verificar alterações realize o comando abaixo acessando o prompt do Postgres.
 
