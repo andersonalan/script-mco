@@ -67,12 +67,21 @@ Parameters of your system
 Clicando no botão `Generate` vai mostrar os parâmetros corretos ao lado direito.
 O próximo passo é ir até o arquivo que fica no caminho `/etc/postgresql/14/main/postgresql.conf` e atravez do `nano` e fazer a alteração.
 
+## Segundo passo - Instalando Java 8
 
-
-
-
-
-
+Atualize o gerenciador de pacotes com o comando:
+```
+sudo apt updade
+```
+Execute o seguinte comando para instalar o Java Runtime Enviroment (JRE):
+```
+sudo apt install openjdk-8-jre-headless 
+```
+Então instalar o Java Development Kit (JDK):
+```
+sudo apt install openjdk-8-jdk-headless
+```
+Para confirmar a instalação basta executar `java -version` e `javac -version` 
 
 
 
