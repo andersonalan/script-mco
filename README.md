@@ -51,7 +51,7 @@ Para ajustar as as configurações de memória e conexões do **postgres** ir at
 
 > Inserindo os parâmetros da maquina virtual o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
 >
-> Segue o exemplo de parâmetros abaixo tirados a partir da VM de ubuntuserver.
+> Como exemplo utilizei os parâmetros abaixo extraindo a partir da VM de ubuntuserver.
 
 Parameters of your system
 - DB version 14
@@ -64,6 +64,45 @@ Parameters of your system
 
 Clicando no botão `Generate` vai mostrar os parâmetros corretos ao lado direito.
 O próximo passo é ir até o arquivo que fica no caminho `/etc/postgresql/14/main/postgresql.conf` e atravez do `nano` e fazer a alteração.
+
+> Abaixo o resultado do exemplo:
+
+- max_connections = 100
+- shared_buffers = 512MB
+- effective_cache_size = 1536MB
+- maintenance_work_mem = 128MB
+- checkpoint_completion_target = 0.9
+- wal_buffers = 16MB
+- default_statistics_target = 100
+- random_page_cost = 4
+- effective_io_concurrency = 2
+- work_mem = 1310kB
+- min_wal_size = 1GB
+- max_wal_size = 4GB
+
+>lembrando de estar em usuário root 
+
+Ir até a pasta `/main`:
+```
+cd /etc/postgresql/14/main/
+```
+E executar o `nano` para editar os parâmetros:
+```
+nano postgresql.conf
+```
+>Utilize o `Ctrl W` para procurar os parâmetros.
+
+>Caso os parâmetros estejam comentados com hashtag `#` remover a hashtag.
+
+>Finalizando as alterações `Ctrl O` para salvar e `Ctrl X` para fechar.
+
+Para verificar alterações realize o comando abaixo acessando o prompt do Postgres.
+
+```
+sudo -u postgres psql
+```
+Se realizar o acesso no prompt as alterações foram um sucesso!
+
 
 ## Segundo passo - Instalando Java 8
 
