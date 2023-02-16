@@ -47,8 +47,6 @@ Os próximos passos serão o ajuste de memória e conexões dentro do arquivo `p
 
 ### Ajuste de memória e conexões PostgreSQL 
 
-/etc/postgresql/14/main
-
 Para ajustar as as configurações de memória e conexões do **postgres** ir até o site [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL") 
 
 > Inserindo os parâmetros da maquina virtual o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
@@ -81,7 +79,41 @@ Então instalar o Java Development Kit (JDK):
 ```
 sudo apt install openjdk-8-jdk-headless
 ```
-Para confirmar a instalação basta executar `java -version` e `javac -version` 
+Para confirmar a instalação basta executar `java -version` e `javac -version`.
+
+A instalação do Java 8 está completa!
+O próximo passo é instalar o Tomcat 9.
+
+## Terceiro passo - Instalando Tomcat 9 
+
+Para instalar o tomcat precisa primeiramente criar um diretório para fazer isso seguir os passos abaixo:
+```
+sudo su
+```
+```
+cd /
+```
+```
+mkdir -p applications/installers
+```
+```
+cd applications/installers/
+```
+Agora para instalar o tomcat 9 precisa dar a permisão para a pasta applications através do comando `chmod`:
+```
+sudo chmod -R 777 /applications
+```
+Baixar o arquivo `tar.gz` através do comando `wget` e o link do download:
+
+>Lembrando que precisa estar na pasta `/applications/installers` para baixar o arquivo.
+
+```
+sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.21/bin/apache-tomcat-9.0.21.tar.gz
+```
+Para extrair:
+```
+sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
+```
 
 
 
