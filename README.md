@@ -10,6 +10,8 @@ E depois atualizar os pacotes
 ```
 sudo apt upgrade
 ```
+___
+
 ## Primeiro passo - Instalando PostgreSQL
 
 Instale o pacote Postgres junto com `-contrib`:
@@ -44,6 +46,7 @@ postgres=# \q
 ```
 A instalação do PostgreSQL está completa! 
 Os próximos passos serão o ajuste de memória e conexões dentro do arquivo `postgresql.conf` e no arquivo `pg_hba.conf`.
+
 
 ### Ajuste de memória e conexões PostgreSQL 
 
@@ -102,7 +105,7 @@ Para verificar alterações realize o comando abaixo acessando o prompt do Postg
 sudo -u postgres psql
 ```
 Se realizar o acesso no prompt as alterações foram um sucesso!
-
+___
 
 ## Segundo passo - Instalando Java 8
 
@@ -122,6 +125,7 @@ Para confirmar a instalação basta executar `java -version` e `javac -version`.
 
 A instalação do Java 8 está completa!
 O próximo passo é instalar o Tomcat 9.
+___
 
 ## Terceiro passo - Instalando Tomcat 9 
 
@@ -153,6 +157,41 @@ Para extrair:
 ```
 sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
+Ir até a pasta `/bin`
+```
+cd apache-tomcat-9.0.21/bin/
+```
+
+
+
+
+[Unit]
+Description=Apache Tomcat Web Application Container  
+Wants=network.target  
+After=network.target
+
+[Service]  
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-0.el8_2.x86_64/jre  
+
+Environment=CATALINA_PID={{ tomcat_dir }}/tomcat/temp/tomcat.pid  
+Environment=CATALINA_HOME={{ tomcat_dir }}/tomcat  
+Environment='CATALINA_OPTS=-Xms512M -Xmx1G -Djava.net.preferIPv4Stack=true'  
+Environment='JAVA_OPTS=-Djava.awt.headless=true'  
+
+ExecStart={{ tomcat_dir }}/tomcat/bin/startup.sh  
+ExecStop={{ tomcat_dir }}/tomcat/bin/shutdown.sh  
+SuccessExitStatus=143  
+
+RestartSec=10  
+Restart=always
+
+[Install]  
+WantedBy=multi-user.target
+
+
+
 
 
 
