@@ -1,6 +1,6 @@
 # Tutorial para instalação de Java 8 / Tomcat 9 / PostgreSQL
 
-Tutorial básico para instalação das ferramentas necessárias para
+Tutorial básico para instalação das ferramentas necessárias para a instalação do sistema MCO
 
 Iniciando o Ubuntuserver via ssh atualizar a lista de pacotes
 ```
@@ -157,41 +157,63 @@ Para extrair:
 ```
 sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
-Ir até a pasta `/bin`
+O próximo passo é criar o arquivo `tomcat.service` para a inicialização do `systemctl` e para fazer ir isso ir até a pasta `system` dentro do `etc` através dos seguintes comandos:
 ```
-cd apache-tomcat-9.0.21/bin/
+cd /etc/systemd/system
 ```
+Agora precisa criar o arquivo utilizando o `nano`:
+```
+nano tomcat.service
+```
+Abaixo segue o modelo do arquivo:
+>Lembrando que caso o path das variáveis de ambiente esteja diferente precisa alterar no arquivo.
 
-
-
-
+```
 [Unit]
-Description=Apache Tomcat Web Application Container  
-Wants=network.target  
+Description=Apache Tomcat Web Application Container
+Wants=network.target
 After=network.target
 
-[Service]  
+[Service]
 Type=forking
 
-Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-0.el8_2.x86_64/jre  
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/
 
-Environment=CATALINA_PID={{ tomcat_dir }}/tomcat/temp/tomcat.pid  
-Environment=CATALINA_HOME={{ tomcat_dir }}/tomcat  
-Environment='CATALINA_OPTS=-Xms512M -Xmx1G -Djava.net.preferIPv4Stack=true'  
-Environment='JAVA_OPTS=-Djava.awt.headless=true'  
+Environment=CATALINA_PID=/applications/installers/apache-tomcat-9.0.21/temp/tomcat.pid  
+Environment=CATALINA_HOME=/applications/installers/apache-tomcat-9.0.21/
+Environment='CATALINA_OPTS=-Xms512M -Xmx1G -Djava.net.preferIPv4Stack=true'
+Environment='JAVA_OPTS=-Djava.awt.headless=true'
 
-ExecStart={{ tomcat_dir }}/tomcat/bin/startup.sh  
-ExecStop={{ tomcat_dir }}/tomcat/bin/shutdown.sh  
-SuccessExitStatus=143  
+ExecStart=/applications/installers/apache-tomcat-9.0.21/bin/startup.sh
+ExecStop=/applications/installers/apache-tomcat-9.0.21/bin/shutdown.sh
+SuccessExitStatus=143
 
-RestartSec=10  
+RestartSec=10
 Restart=always
-
-[Install]  
+ 
+[Install]
 WantedBy=multi-user.target
+```
+>Finalizando o arquivo **Ctrl O** para salvar e **Ctrl X** para fechar.
 
+Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`. 
 
+Para habilitar utilize primeiro o comando `enable`:
 
+```
+systemctl enable tomcat.service
+```
+Depois de habilitado utilize o comando `start` para iniciar:
+```
+systemctl start tomcat.service
+```
+
+Para verificar o status do serviço utilize o comando `status`:
+```
+systemctl status tomcat.service
+```
+ 
+Tomcat instalado e serviço de inicialização feito com sucesso!
 
 
 
