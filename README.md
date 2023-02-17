@@ -27,12 +27,13 @@ Então você consegue acessar o PostgreSQL prompt com o comando:
 ```
 psql
 ```
-Isso o coctará ao prompt do PostgreSQL.
+Isso o conectará ao prompt do PostgreSQL.  
 Para sair utilizar executar o `\q`:
 ```
 postgres=# \q
 ```
-Isto te retornará para o **postgres**. Para retornar para o ubunutuserver utilize o comando `exit`:
+O comando retornará para o **postgres**.   
+Para retornar para o ubunutuserver utilize o comando `exit`:
 ```
 postgres@ubuntuserver:~$ exit
 ```
@@ -50,7 +51,7 @@ Os próximos passos serão o ajuste de memória e conexões dentro do arquivo `p
 
 ### Ajuste de memória e conexões PostgreSQL 
 
-Para ajustar as as configurações de memória e conexões do **postgres** ir até o site [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL") 
+Para ajustar as configurações de memória e conexões do **postgres** ir até o site através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL") 
 
 > Inserindo os parâmetros da maquina virtual o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
 >
@@ -89,7 +90,7 @@ Ir até a pasta `/main`:
 ```
 cd /etc/postgresql/14/main/
 ```
-E executar o `nano` para editar os parâmetros:
+E executar o `nano` no arquivo `postgresql.conf` para editar os parâmetros:
 ```
 nano postgresql.conf
 ```
@@ -127,9 +128,13 @@ A instalação do Java 8 está completa!
 O próximo passo é instalar o Tomcat 9.
 ___
 
-## Terceiro passo - Instalando Tomcat 9 
+## Terceiro passo - Instalando Tomcat 9
 
-Para instalar o tomcat precisa primeiramente criar um diretório para fazer isso seguir os passos abaixo:
+Atualize o gerenciador de pacotes com o comando:
+```
+sudo apt updade
+```
+Para instalar o tomcat precisa primeiramente criar um diretório e para fazer isso seguir os passos abaixo:
 ```
 sudo su
 ```
@@ -142,11 +147,11 @@ mkdir -p applications/installers
 ```
 cd applications/installers/
 ```
-Agora para instalar o tomcat 9 precisa dar a permisão para a pasta applications através do comando `chmod`:
+Agora para instalar o tomcat 9 precisa dar a permisão para a pasta `applications` através do comando `chmod`:
 ```
 sudo chmod -R 777 /applications
 ```
-Baixar o arquivo `tar.gz` através do comando `wget` e o link do download:
+O arquivo `tar.gz` será baixado através do comando `wget` e o link do download:
 
 >Lembrando que precisa estar na pasta `/applications/installers` para baixar o arquivo.
 
@@ -166,7 +171,7 @@ Agora precisa criar o arquivo utilizando o `nano`:
 nano tomcat.service
 ```
 Abaixo segue o modelo do arquivo:
->Lembrando que caso o path das variáveis de ambiente esteja diferente precisa alterar no arquivo.
+>Lembrando que caso o path das variáveis de ambiente esteja diferente precisa alterar o path no arquivo.
 
 ```
 [Unit]
@@ -213,7 +218,10 @@ Para verificar o status do serviço utilize o comando `status`:
 systemctl status tomcat.service
 ```
  
-Tomcat instalado e serviço de inicialização feito com sucesso!
+Tomcat instalado e serviço de inicialização feito com sucesso!  
+
+Todas as ferramentas necessárias para a instalação do sistema MCO foram instaladas com sucesso!
+
 
 
 
