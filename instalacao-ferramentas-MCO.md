@@ -2,11 +2,11 @@
 
 Tutorial básico para instalação das ferramentas necessárias para a instalação do sistema MCO no ambiente `Linux`
 
-Após iniciar o ubuntuserver utilizar o comando `apt update` atualizar a lista de pacotes
+Após iniciar o ubuntuserver utilizar o comando `apt update` para atualizar a lista de pacotes
 ```
 sudo apt updade
 ```
-E depois atualizar os pacotes
+Em seguida atualizar os pacotes
 ```
 sudo apt upgrade
 ```
@@ -19,11 +19,11 @@ Instalar o Postgres junto com o pacote `-contrib`:
 sudo apt install postgresql postgresql-contrib
 ```
 Finalizada instalação uma conta de usuário é criada automaticamente com o nome **postgres**  
-Para acessar o sgbd PostgreSQL mudar para a conta **postgres** executando o seguinte comando:
+Para acessar o PostgreSQL mudar para a conta **postgres**, executando o seguinte comando:
 ```
 sudo -i -u postgres
 ```
-Para se conectar o `PostgreSQL prompt` executar o seguinte comando:
+Para realizar conexão `PostgreSQL prompt` executar o seguinte comando:
 ```
 psql
 ``` 
@@ -31,29 +31,29 @@ Para desconectar do `prompt do PostgreSQL` utilizar o comando `\q`:
 ```
 postgres=# \q
 ```
-O comando retornará para a conta **postgres**.   
-Para retornar para a prompt do ubunutuserver utilize o comando `exit`:
+O comando acima retornará para a conta **postgres**.   
+Para retornar ao prompt do ubunutuserver, utilize o comando `exit`:
 ```
 postgres@ubuntuserver:~$ exit
 ```
-Outro forma de conexão com o `prompt PostgreSQL` é executar o comando `psql` diretamente do terminal:
+Outra forma de conexão com o `prompt PostgreSQL` é executar o comando `psql`, diretamente no terminal:
 ```
 sudo -u postgres psql
 ```
-Para desconectar do `prompt PostgreSQL`:
+Para desconectar do `prompt PostgreSQL`, executar o comando `\q`:
 ```
 postgres=# \q
 ```
   
-A seguir realizar o ajuste de memória e conexões dentro do arquivo `postgresql.conf` e no arquivo `pg_hba.conf`.
+A seguir realizar o ajuste de memória e conexões dentro do arquivo `postgresql.conf` e no arquivo `pg_hba.conf`, respectivamente.
 
 ### Ajuste de memória e conexões PostgreSQL 
 
-Para ajustar as configurações de memória e conexões do **postgres** acessar a calculadora de configuração através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL") 
+Para ajustar as configurações de memória e conexões do **postgres**, acessar a calculadora de configuração através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL"), inserindo os parâmetros da máquina.
 
-> Inserindo os parâmetros da maquina virtual o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
+> Inserindo os parâmetros da máquina, o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
 >
-> Como exemplo utilizei os parâmetros abaixo extraindo a partir da VM de ubuntuserver.
+> Como exemplo utilizei os parâmetros abaixo, extraindo a partir da VM do ubuntuserver.
 
 Parameters of your system
 - DB version 14
@@ -64,8 +64,8 @@ Parameters of your system
 - Number of Connections 100
 - Data Storage SSD storage
 
-Clicando no botão `Generate` vai mostrar os parâmetros corretos ao lado direito.
-O próximo passo é ir até o arquivo que fica no caminho `/etc/postgresql/14/main/postgresql.conf` e através do programa `nano` e fazer a alteração dos parâmetros.
+Clicando no botão `Generate` a calculadora irá mostrar os parâmetros a serem utilizados ao lado direito.
+O passo seguinte é ir até o arquivo `postgresql.conf` que fica no caminho `/etc/postgresql/14/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros.
 
 > Abaixo o resultado do exemplo:
 
@@ -82,55 +82,59 @@ O próximo passo é ir até o arquivo que fica no caminho `/etc/postgresql/14/ma
 - min_wal_size = 1GB
 - max_wal_size = 4GB
 
->lembrando de estar em usuário root 
+>lembrando de estar em usuário root
 
-Ir até a pasta `/main`:
+
+
+Para editar o arquivo `postgresql.conf` acessar a pasta `/main` localizada dentro do caminho de instalação do postgres:
+
 ```
-cd /etc/postgresql/14/main/
+cd /etc/postgresql//main/
 ```
-E executar o `nano` no arquivo `postgresql.conf` para editar os parâmetros:
+Após acessar a pasta `./main`, executar o programa `nano` no arquivo `postgresql.conf`, para edição dos parâmetros:
 ```
 nano postgresql.conf
 ```
->Utilize o **Ctrl W** para procurar os parâmetros.
+>Com o aquivo `postgres.conf` aberto utilize o **Ctrl W** para localizar os parâmetros.
 
 >Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.
 
->Finalizando as alterações **Ctrl O** para salvar e **Ctrl X** para fechar.
+>Finalizada as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.
 
-Para verificar alterações realize o comando abaixo acessando o prompt do Postgres.
+Para validar alterações realizadas, acesse o terminal e execute o comando abaixo.
 
 ```
 sudo -u postgres psql
 ```
-Se realizar o acesso no prompt as alterações foram um sucesso!  
+Caso o acesso ao prompt do postgres ocorra, as alterações foram um sucesso!  
+Caso contrário refaça os passos acima.  
 
 A instalação do PostgreSQL está completa!
 ___
 
 ## Segundo passo - Instalando Java 8
 
-Atualize o gerenciador de pacotes com o comando:
+Antes de iniciar a instalação atualize o gerenciador de pacotes com o comando:
 ```
 sudo apt updade
 ```
-Execute o seguinte comando para instalar o Java Runtime Enviroment (JRE):
+Instalar o Java Runtime Enviroment (JRE), através do comando a seguir:
 ```
 sudo apt install openjdk-8-jre-headless 
 ```
-Então instalar o Java Development Kit (JDK):
+Instalar o Java Development Kit (JDK), através do comando a seguir:
 ```
 sudo apt install openjdk-8-jdk-headless
 ```
-Para confirmar a instalação basta executar `java -version` e `javac -version`.
+Para confirmar a instalação executar os comandos `java -version` e `javac -version`.
 
 A instalação do Java 8 está completa!
-O próximo passo é instalar o Tomcat 9.
+
 ___
 
 ## Terceiro passo - Instalando Tomcat 9
 
-Atualize o gerenciador de pacotes com o comando:
+Antes de iniciar a instalação atualize o gerenciador de pacotes com o comando:
 ```
 sudo apt updade
 ```
