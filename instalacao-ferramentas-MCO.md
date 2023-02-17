@@ -134,13 +134,13 @@ ___
 
 ## Terceiro passo - Instalando Tomcat 9
 
-Antes de iniciar a instalação atualize o gerenciador de pacotes com o comando:
+Antes de iniciar a instalação atualizar o gerenciador de pacotes com o comando:
 ```
 sudo apt updade
 ```
-Para instalação do `tomcat`, necessário baixar o instalador compactado `.tar.gz` e criar um diretório.
 
-Para criar o diretório executar os comandos a seguir:
+Criar o diretório de instalação do tomcat através dos comandos a seguir.
+  
 ```
 sudo su
 ```
@@ -157,7 +157,7 @@ Antes de iniciar a instalação do tomcat necessário liberar a permisão de usu
 ```
 sudo chmod -R 777 /applications
 ```
-O instalador `.tar.gz` será baixado através do comando `wget` junto com o link do download:
+Baixar o instalador `.tar.gz` através do comando `wget` junto ao link do download:
 
 >Lembrando que precisa estar na pasta `/applications/installers` para baixar o instalador.
 
@@ -172,12 +172,12 @@ O próximo passo é criar o arquivo `tomcat.service` para a inicialização do `
 ```
 cd /etc/systemd/system
 ```
-Agora precisa criar o arquivo utilizando o `nano`:
+Criar o arquivo utilizando o programa `nano`:
 ```
 nano tomcat.service
 ```
 Abaixo segue o modelo do arquivo:
->Lembrando que caso o path das variáveis de ambiente esteja diferente precisa alterar o path no arquivo.
+>Lembrando que caso o caminho das variáveis de ambiente esteja diferente precisa alterar o caminho no arquivo.
 
 ```
 [Unit]
