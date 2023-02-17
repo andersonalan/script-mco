@@ -138,7 +138,7 @@ Antes de iniciar a instalação atualize o gerenciador de pacotes com o comando:
 ```
 sudo apt updade
 ```
-Para instalar o tomcat precisa primeiramente criar um diretório e para fazer isso seguir os passos abaixo:
+Para instalação do `tomcat`, necessário criar um diretório executando os comandos a seguir:
 ```
 sudo su
 ```
@@ -151,18 +151,18 @@ mkdir -p applications/installers
 ```
 cd applications/installers/
 ```
-Agora para instalar o tomcat 9 precisa dar a permisão para a pasta `applications` através do comando `chmod`:
+Antes de iniciar a instalação o tomcat necessário liberar a permisão de usuário para a pasta `applications` através do comando `chmod`:
 ```
 sudo chmod -R 777 /applications
 ```
-O arquivo `tar.gz` será baixado através do comando `wget` e o link do download:
+O arquivo `tar.gz` será baixado através do comando `wget` junto com o link do download:
 
 >Lembrando que precisa estar na pasta `/applications/installers` para baixar o arquivo.
 
 ```
 sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.21/bin/apache-tomcat-9.0.21.tar.gz
 ```
-Para extrair:
+Para extrair o tomcat na pasta, executar o comando:
 ```
 sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
