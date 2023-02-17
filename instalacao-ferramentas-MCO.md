@@ -118,10 +118,6 @@ Antes de iniciar a instalação atualize o gerenciador de pacotes com o comando:
 ```
 sudo apt updade
 ```
-Instalar o Java Runtime Enviroment (JRE), através do comando a seguir:
-```
-sudo apt install openjdk-8-jre-headless 
-```
 Instalar o Java Development Kit (JDK), através do comando a seguir:
 ```
 sudo apt install openjdk-8-jdk-headless
@@ -142,20 +138,10 @@ sudo apt updade
 Criar o diretório de instalação do tomcat através dos comandos a seguir.
   
 ```
-sudo su
+sudo mkdir -p /applications/installers
 ```
 ```
-cd /
-```
-```
-mkdir -p applications/installers
-```
-```
-cd applications/installers/
-```
-Antes de iniciar a instalação do tomcat necessário liberar a permisão de usuário para a pasta `applications` através do comando `chmod`:
-```
-sudo chmod -R 777 /applications
+sudo cd /applications/installers/
 ```
 Baixar o instalador `.tar.gz` através do comando `wget` junto ao link do download:
 
@@ -164,17 +150,17 @@ Baixar o instalador `.tar.gz` através do comando `wget` junto ao link do downlo
 ```
 sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.21/bin/apache-tomcat-9.0.21.tar.gz
 ```
-Para extrair o tomcat na pasta, executar o comando:
+Extrair o tomcat no diretório criado e executar o comando:
 ```
 sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
-O próximo passo é criar o arquivo `tomcat.service` para a inicialização do `systemctl` e para fazer ir isso ir até a pasta `system` dentro do `etc` através dos seguintes comandos:
 ```
-cd /etc/systemd/system
+sudo mv -r /applications/installers/apache-tomcat-9.0.21 /applications/tomcat 
 ```
-Criar o arquivo utilizando o programa `nano`:
+Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` e para fazer ir isso ir até a pasta `/etc/systemd/system` através do seguinte comando:
+
 ```
-nano tomcat.service
+sudo nano /etc/systemd/system/tomcat.service
 ```
 Abaixo segue o modelo do arquivo:
 >Lembrando que caso o caminho das variáveis de ambiente esteja diferente precisa alterar o caminho no arquivo.
@@ -209,25 +195,27 @@ WantedBy=multi-user.target
 
 Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`. 
 
+```
+systemctl reload-daemons
+```
+
 Para habilitar utilize primeiro o comando `enable`:
 
 ```
-systemctl enable tomcat.service
+systemctl enable tomcat
 ```
 Depois de habilitado utilize o comando `start` para iniciar:
 ```
-systemctl start tomcat.service
+systemctl start tomcat
 ```
 
 Para verificar o status do serviço utilize o comando `status`:
 ```
-systemctl status tomcat.service
+systemctl status tomcat
 ```
+Para parar stop]
+
  
 Tomcat instalado e serviço de inicialização feito com sucesso!  
 
 Todas as ferramentas necessárias para a instalação do sistema MCO foram instaladas com sucesso!
-
-
-
-
