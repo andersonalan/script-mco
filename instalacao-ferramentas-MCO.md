@@ -73,48 +73,43 @@ nano /etc/postgresql/15/main/postgresql.conf
 - min_wal_size = 1GB
 - max_wal_size = 4GB
 
->Com o aquivo `postgres.conf` aberto utilize o **Ctrl W** para localizar os parâmetros.
->Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.
->Finalizada as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.
+>Com o aquivo `postgres.conf` aberto utilize o **Ctrl W** para localizar os parâmetros.  
+>Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.  
+>Finalizada as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.  
 
-O próximo passo é realizar as alterações de conexão necessárias, para isso acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
+O próximo passo é realizar as alterações de conexão necessárias, e para isso criar uma `senha de acesso` ao **postgres** e acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
+
+Acesse o `prompt Postgres` com o comando abaixo.
+```
+sudo -u postgres psql
+```
+Dentro do `terminal Postgres` alterar a senha do usuário **postgres** com o seguinte comando:
+
+```
+alter user postgres with password 'senha desejada';
+```
+Sair do `prompt Postgres` com o comando `\q`:
+```
+\q
+```
+Para acessar a pasta `pg_hba.conf` através do `nano` utilizar o comando a seguir:
+
 ```
 nano /etc/postgresql/15/main/pg_hba.conf 
 ```
-> Comentar a linha abaixo da Database administrative login by Unix domain socket
-> 
-> Para comentar a linha apenas adicionar o hashtag anterior no início da linha conforme o exemplo abaixo
-> 
+> Comentar a linha abaixo da Database administrative login by Unix domain socket.  
+> Para comentar a linha apenas adicionar o hashtag anterior no início da linha conforme o exemplo abaixo:  
 >#local all all peer
 
 Após feito a alteração reiniciar o **postgres** utilizando o **restart**
 ```
 systemctl restart postgres
 ```
-
-Acesse o `prompt Postgres` com o comando abaixo.
+A partir de agora para acessar o **PostigreSQL** será nessário inserir a senha anteriormente criada.  
+Para isso utilize o comando abaixo e depois a inserir a senha:
 ```
-sudo -u postgres psql
+psql -U postgres --password
 ```
-Dentro do `terminal Postgres` alterar a senha do usuário **postgres** com o seguinte comando: *postgres=#*
-
-```
-alter user postgres with password 'senha desejada';
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Caso o acesso ao prompt do postgres ocorra, as alterações foram um sucesso!  
 Caso contrário refaça os passos acima.  
 
@@ -143,9 +138,7 @@ Antes de iniciar a instalação atualizar o gerenciador de pacotes com o comando
 ```
 sudo apt updade
 ```
-
 Criar o diretório de instalação do tomcat através dos comandos a seguir.
-  
 ```
 sudo mkdir -p /applications/installers
 ```
