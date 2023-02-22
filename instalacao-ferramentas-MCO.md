@@ -14,49 +14,35 @@ ___
 
 ## Primeiro passo - Instalando PostgreSQL
 
-Instalar o Postgres junto com o pacote `-contrib`:
+Criar a configuração do repositório de arquivos:
 ```
-sudo apt install postgresql postgresql-contrib
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 ```
-Finalizada instalação uma conta de usuário é criada automaticamente com o nome **postgres**  
-Para acessar o PostgreSQL mudar para a conta **postgres**, executando o seguinte comando:
+Importar a chave de assinatura do repositório:
 ```
-sudo -i -u postgres
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 ```
-Para realizar conexão `PostgreSQL prompt` executar o seguinte comando:
+Atualizar as listas de pacotes:
 ```
-psql
+sudo apt update
 ``` 
-Para desconectar do `prompt do PostgreSQL` utilizar o comando `\q`:
+Instalar a versão mais recente do `PostgreSQL`:
 ```
-postgres=# \q
-```
-O comando acima retornará para a conta **postgres**.   
-Para retornar ao prompt do ubunutuserver, utilize o comando `exit`:
-```
-postgres@ubuntuserver:~$ exit
-```
-Outra forma de conexão com o `prompt PostgreSQL` é executar o comando `psql`, diretamente no terminal:
-```
-sudo -u postgres psql
-```
-Para desconectar do `prompt PostgreSQL`, executar o comando `\q`:
-```
-postgres=# \q
+sudo apt -y install postgresql
 ```
   
 A seguir realizar o ajuste de memória e conexões dentro do arquivo `postgresql.conf` e no arquivo `pg_hba.conf`, respectivamente.
 
 ### Ajuste de memória e conexões PostgreSQL 
 
-Para ajustar as configurações de memória e conexões do **postgres**, acessar a calculadora de configuração através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL"), inserindo os parâmetros da máquina.
+Para ajustar as configurações de memória do **postgres**, acessar a calculadora de configuração através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL"), inserindo os parâmetros da máquina.
 
 > Inserindo os parâmetros da máquina, o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
 >
 > Como exemplo utilizei os parâmetros abaixo, extraindo a partir da VM do ubuntuserver.
 
 Parameters of your system
-- DB version 14
+- DB version 15
 - OS Type Linux
 - DB Type Mixed type of application
 - Total Memory (RAM) 2GB
@@ -65,8 +51,13 @@ Parameters of your system
 - Data Storage SSD storage
 
 Clicando no botão `Generate` a calculadora irá mostrar os parâmetros a serem utilizados ao lado direito.
-O passo seguinte é ir até o arquivo `postgresql.conf` que fica no caminho `/etc/postgresql/14/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros.
+O passo seguinte é ir até o arquivo `postgresql.conf` que fica no caminho `/etc/postgresql/15/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros com o comando:
 
+>lembrando de estar em usuário root
+
+```
+nano /etc/postgresql/15/main/postgresql.conf
+```
 > Abaixo o resultado do exemplo:
 
 - max_connections = 100
@@ -82,30 +73,48 @@ O passo seguinte é ir até o arquivo `postgresql.conf` que fica no caminho `/et
 - min_wal_size = 1GB
 - max_wal_size = 4GB
 
->lembrando de estar em usuário root
-
-
-
-Para editar o arquivo `postgresql.conf` acessar a pasta `/main` localizada dentro do caminho de instalação do postgres:
-
-```
-cd /etc/postgresql//main/
-```
-Após acessar a pasta `./main`, executar o programa `nano` no arquivo `postgresql.conf`, para edição dos parâmetros:
-```
-nano postgresql.conf
-```
 >Com o aquivo `postgres.conf` aberto utilize o **Ctrl W** para localizar os parâmetros.
-
 >Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.
-
 >Finalizada as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.
 
-Para validar alterações realizadas, acesse o terminal e execute o comando abaixo.
+O próximo passo é realizar as alterações de conexão necessárias, para isso acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
+```
+nano /etc/postgresql/15/main/pg_hba.conf 
+```
+> Comentar a linha abaixo da Database administrative login by Unix domain socket
+> 
+> Para comentar a linha apenas adicionar o hashtag anterior no início da linha conforme o exemplo abaixo
+> 
+>#local all all peer
 
+Após feito a alteração reiniciar o **postgres** utilizando o **restart**
+```
+systemctl restart postgres
+```
+
+Acesse o `prompt Postgres` com o comando abaixo.
 ```
 sudo -u postgres psql
 ```
+Dentro do `terminal Postgres` alterar a senha do usuário **postgres** com o seguinte comando: *postgres=#*
+
+```
+alter user postgres with password 'senha desejada';
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Caso o acesso ao prompt do postgres ocorra, as alterações foram um sucesso!  
 Caso contrário refaça os passos acima.  
 
@@ -196,7 +205,7 @@ WantedBy=multi-user.target
 Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`. 
 
 ```
-systemctl reload-daemons
+systemctl daemon-reload
 ```
 
 Para habilitar utilize primeiro o comando `enable`:
@@ -213,7 +222,6 @@ Para verificar o status do serviço utilize o comando `status`:
 ```
 systemctl status tomcat
 ```
-Para parar stop]
 
  
 Tomcat instalado e serviço de inicialização feito com sucesso!  
