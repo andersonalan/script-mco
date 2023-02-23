@@ -97,25 +97,24 @@ Sair do `prompt Postgres` com o comando `\q`:
 ```
 \q
 ```
-Acessar a pasta `pg_hba.conf` através do `nano` utilizando o comando a seguir:
+Acessar a pasta `pg_hba.conf` através do programa `nano` utilizando o comando a seguir:
 ```
 nano /etc/postgresql/15/main/pg_hba.conf 
 ```
-> Comentar a linha abaixo da Database administrative login by Unix domain socket.  
-> Para comentar a linha apenas adicionar o hashtag anterior no início da linha conforme o exemplo abaixo:  
+> Comentar a linha abaixo da "Database administrative login by Unix domain socket".  
+> Para comentar a linha adicionar o hashtag no início da linha conforme o exemplo abaixo:  
 >#local all all peer
 
-Após feito a alteração reiniciar o **postgres** utilizando o **systemctl restart**:
+Realizada a alteração necessário reiniciar o **postgres** utilizando o **systemctl restart**:
 ```
 systemctl restart postgres
 ```
-A partir de agora para acessar o **PostigreSQL** será nessário inserir a senha anteriormente criada.  
-Para isso utilize o comando abaixo e depois a inserir a senha:
+A partir de agora para acessar o **PostgreSQL** será necessário inserir a senha anteriormente criada.  
+Utilizar o comando abaixo e em seguida a insira a senha:
 ```
 psql -U postgres --password
 ```
-Caso o acesso ao prompt do postgres ocorra, as alterações foram um sucesso!  
-Caso contrário refaça os passos acima.  
+Caso o acesso ao prompt do postgres ocorra, então as alterações foram um sucesso, caso contrário, refaça os passos acima.  
 
 A instalação do PostgreSQL está completa!
 ___
@@ -146,31 +145,32 @@ Criar o diretório de instalação do tomcat através dos comandos a seguir.
 ```
 sudo mkdir -p /applications/installers
 ```
+Acessar o diretório criado através do comando:
 ```
 sudo cd /applications/installers/
 ```
-Baixar o instalador `.tar.gz` através do comando `wget` junto ao link do download:
+Baixar o instalador `.tar.gz` através do comando `wget` junto ao link do download:  
 
 >Lembrando que precisa estar na pasta `/applications/installers` para baixar o instalador.
 
 ```
 sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.21/bin/apache-tomcat-9.0.21.tar.gz
 ```
-Extrair o tomcat no diretório criado e executar o comando:
+Extrair o tomcat no diretório criado com o comando:
 ```
 sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
 Alterar o nome do arquivo:
->Como exemplo utilizei o nome tomcat
+>Como exemplo utilizei o nome "tomcat"
 ```
-sudo mv -r /applications/installers/apache-tomcat-9.0.21 /applications/installers/tomcat 
+sudo mv /applications/installers/apache-tomcat-9.0.21 /applications/installers/tomcat 
 ```
 Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` dentro da pasta `/etc/systemd/system` através do seguinte comando:
 
 ```
 sudo nano /etc/systemd/system/tomcat.service
 ```
-Para saber o caminho do `java 8` utilize o comando a seguir:
+Para o próximo passo é necessário saber o caminho do `java 8` e para isso utilize o comando a seguir:
 ```
 sudo update-alternatives --config java
 ```
@@ -204,22 +204,24 @@ WantedBy=multi-user.target
 ```
 >Finalizando o arquivo **Ctrl O** para salvar e **Ctrl X** para fechar.
 
-Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`. 
+Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`.  
+Utilizar o `systemctl daemon-reload` para atualizar as informações do `tomcat.service`.
 ```
 systemctl daemon-reload
 ```
-Para habilitar utilize primeiro o comando `enable`:
+Habilitar utilize primeiro o comando `enable`:
 ```
 systemctl enable tomcat
 ```
-Depois de habilitado utilize o comando `start` para iniciar:
+Depois de habilitado utilizar o comando `start` para iniciar:
 ```
 systemctl start tomcat
 ```
+Tomcat instalado e serviço de inicialização criado com sucesso!  
+
 Para verificar o status do serviço utilize o comando `status`:
 ```
 systemctl status tomcat
 ```
-Tomcat instalado e serviço de inicialização feito com sucesso!  
-
+ 
 Todas as ferramentas necessárias para a instalação do sistema MCO foram instaladas com sucesso!
