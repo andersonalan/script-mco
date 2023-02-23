@@ -170,7 +170,7 @@ Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciad
 ```
 sudo nano /etc/systemd/system/tomcat.service
 ```
-Para o próximo passo é necessário saber o caminho do `java 8` e para isso utilize o comando a seguir:
+Para o próximo passo será necessário saber o caminho do `java 8` e para isso utilizar o comando a seguir:
 ```
 sudo update-alternatives --config java
 ```
@@ -202,9 +202,9 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
->Finalizando o arquivo **Ctrl O** para salvar e **Ctrl X** para fechar.
+>Finalizando as alterações no arquivo, **Ctrl O** para salvar e **Ctrl X** para fechar.
 
-Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização, e para isso utilize o comando `enable` e depois iniciar com o comando `start`.  
+Executar o `systemctl` para habilitar o serviço de inicialização, e para isso utilizar o comando `enable` e depois iniciar com o comando `start`.  
 Utilizar o `systemctl daemon-reload` para atualizar as informações do `tomcat.service`.
 ```
 systemctl daemon-reload
@@ -213,7 +213,7 @@ Habilitar o `enable` utilizando o comando:
 ```
 systemctl enable tomcat
 ```
-Depois de habilitado utilizar o comando `start` para iniciar:
+Depois de habilitado utilizar o comando `start` para iniciar o `tomcat`:
 ```
 systemctl start tomcat
 ```
