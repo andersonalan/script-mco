@@ -2,7 +2,7 @@
 
 Tutorial básico para instalação das ferramentas necessárias para a instalação do sistema MCO no ambiente `Linux`
 
-Após iniciar o ubuntuserver utilizar o comando `apt update` para atualizar a lista de pacotes
+Iniciar o ubuntuserver e executar o comando `apt update` para atualizar a lista de pacotes
 ```
 sudo apt updade
 ```
@@ -31,11 +31,13 @@ Instalar a versão mais recente do `PostgreSQL`:
 sudo apt -y install postgresql
 ```
   
-A seguir realizar o ajuste de memória e conexões dentro do arquivo `postgresql.conf` e no arquivo `pg_hba.conf`, respectivamente.
-
+Realizar o ajuste de memória e conexões dentro do arquivo `postgresql.conf` e no arquivo `pg_hba.conf`, respectivamente.
+___
 ### Ajuste de memória e conexões PostgreSQL 
 
-Para ajustar as configurações de memória do **postgres**, acessar a calculadora de configuração através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL"), inserindo os parâmetros da máquina.
+#### Ajuste de memória
+
+Ajustar as configurações de memória do **postgres**, acessando a calculadora de configuração através do link: [PGTune](https://pgtune.leopard.in.ua/ "calculadora de ajuste de memória PostgreSQL"), inserindo os parâmetros da máquina.
 
 > Inserindo os parâmetros da máquina, o site calculará os valores que serão alterados dentro do arquivo `postgresql.conf`.
 >
@@ -50,8 +52,8 @@ Parameters of your system
 - Number of Connections 100
 - Data Storage SSD storage
 
-Clicando no botão `Generate` a calculadora irá mostrar os parâmetros a serem utilizados ao lado direito.
-O passo seguinte é ir até o arquivo `postgresql.conf` que fica no caminho `/etc/postgresql/15/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros com o comando:
+Clicando no botão `Generate` a calculadora irá mostrar os parâmetros ao lado direito a serem utilizados.
+A seguir abrir arquivo `postgresql.conf` localizado em `/etc/postgresql/15/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros com o comando:
 
 >lembrando de estar em usuário root
 
@@ -75,9 +77,12 @@ nano /etc/postgresql/15/main/postgresql.conf
 
 >Com o aquivo `postgres.conf` aberto utilize o **Ctrl W** para localizar os parâmetros.  
 >Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.  
->Finalizada as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.  
+>Finalizadas as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.  
+___
 
-O próximo passo é realizar as alterações de conexão necessárias, e para isso criar uma `senha de acesso` ao **postgres** e acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
+#### Ajuste de conexões
+
+Realizar as alterações de conexão necessárias, e para isso criar uma `senha de acesso` ao **postgres** e acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
 
 Acesse o `prompt Postgres` com o comando abaixo.
 ```
