@@ -204,12 +204,12 @@ WantedBy=multi-user.target
 ```
 >Finalizando o arquivo **Ctrl O** para salvar e **Ctrl X** para fechar.
 
-Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`.  
+Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização, e para isso utilize o comando `enable` e depois iniciar com o comando `start`.  
 Utilizar o `systemctl daemon-reload` para atualizar as informações do `tomcat.service`.
 ```
 systemctl daemon-reload
 ```
-Habilitar utilize primeiro o comando `enable`:
+Habilitar o `enable` utilizando o comando:
 ```
 systemctl enable tomcat
 ```
