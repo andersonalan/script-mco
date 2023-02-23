@@ -93,7 +93,6 @@ Sair do `prompt Postgres` com o comando `\q`:
 \q
 ```
 Para acessar a pasta `pg_hba.conf` através do `nano` utilizar o comando a seguir:
-
 ```
 nano /etc/postgresql/15/main/pg_hba.conf 
 ```
@@ -101,7 +100,7 @@ nano /etc/postgresql/15/main/pg_hba.conf
 > Para comentar a linha apenas adicionar o hashtag anterior no início da linha conforme o exemplo abaixo:  
 >#local all all peer
 
-Após feito a alteração reiniciar o **postgres** utilizando o **restart**
+Após feito a alteração reiniciar o **postgres** utilizando o **systemctl restart**:
 ```
 systemctl restart postgres
 ```
@@ -156,17 +155,22 @@ Extrair o tomcat no diretório criado e executar o comando:
 ```
 sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
+Alterar o nome do arquivo:
+>Como exemplo utilizei o nome tomcat
 ```
-sudo mv -r /applications/installers/apache-tomcat-9.0.21 /applications/tomcat 
+sudo mv -r /applications/installers/apache-tomcat-9.0.21 /applications/installers/tomcat 
 ```
-Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` e para fazer ir isso ir até a pasta `/etc/systemd/system` através do seguinte comando:
+Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` dentro da pasta `/etc/systemd/system` através do seguinte comando:
 
 ```
 sudo nano /etc/systemd/system/tomcat.service
 ```
+Para saber o caminho do `java 8` utilize o comando a seguir:
+```
+sudo update-alternatives --config java
+```
 Abaixo segue o modelo do arquivo:
 >Lembrando que caso o caminho das variáveis de ambiente esteja diferente precisa alterar o caminho no arquivo.
-
 ```
 [Unit]
 Description=Apache Tomcat Web Application Container
@@ -178,13 +182,13 @@ Type=forking
 
 Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/
 
-Environment=CATALINA_PID=/applications/installers/apache-tomcat-9.0.21/temp/tomcat.pid  
-Environment=CATALINA_HOME=/applications/installers/apache-tomcat-9.0.21/
+Environment=CATALINA_PID=/applications/installers/tomcat/temp/tomcat.pid  
+Environment=CATALINA_HOME=/applications/installers/tomcat/
 Environment='CATALINA_OPTS=-Xms512M -Xmx1G -Djava.net.preferIPv4Stack=true'
 Environment='JAVA_OPTS=-Djava.awt.headless=true'
 
-ExecStart=/applications/installers/apache-tomcat-9.0.21/bin/startup.sh
-ExecStop=/applications/installers/apache-tomcat-9.0.21/bin/shutdown.sh
+ExecStart=/applications/installers/tomcat/bin/startup.sh
+ExecStop=/applications/installers/tomcat/bin/shutdown.sh
 SuccessExitStatus=143
 
 RestartSec=10
@@ -196,13 +200,10 @@ WantedBy=multi-user.target
 >Finalizando o arquivo **Ctrl O** para salvar e **Ctrl X** para fechar.
 
 Agora precisa utilizar o `systemctl` para habilitar o serviço de inicialização com o comando `enable` e depois iniciar com o comando `start`. 
-
 ```
 systemctl daemon-reload
 ```
-
 Para habilitar utilize primeiro o comando `enable`:
-
 ```
 systemctl enable tomcat
 ```
@@ -210,13 +211,10 @@ Depois de habilitado utilize o comando `start` para iniciar:
 ```
 systemctl start tomcat
 ```
-
 Para verificar o status do serviço utilize o comando `status`:
 ```
 systemctl status tomcat
 ```
-
- 
 Tomcat instalado e serviço de inicialização feito com sucesso!  
 
 Todas as ferramentas necessárias para a instalação do sistema MCO foram instaladas com sucesso!
