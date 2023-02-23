@@ -82,13 +82,13 @@ ___
 
 #### Ajuste de conexões
 
-Realizar as alterações de conexão necessárias, e para isso criar uma `senha de acesso` ao **postgres** e acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
+Criar uma `senha de acesso` ao **postgres** e acessar o arquivo `pg_hba.conf` utilizando o programa `nano`:
 
-Acesse o `prompt Postgres` com o comando abaixo.
+Acessar o `prompt Postgres` com o comando abaixo.
 ```
 sudo -u postgres psql
 ```
-Dentro do `terminal Postgres` alterar a senha do usuário **postgres** com o seguinte comando:
+Dentro do `terminal Postgres` criar a senha do usuário **postgres** com o seguinte comando:
 
 ```
 alter user postgres with password 'senha desejada';
@@ -97,7 +97,7 @@ Sair do `prompt Postgres` com o comando `\q`:
 ```
 \q
 ```
-Para acessar a pasta `pg_hba.conf` através do `nano` utilizar o comando a seguir:
+Acessar a pasta `pg_hba.conf` através do `nano` utilizando o comando a seguir:
 ```
 nano /etc/postgresql/15/main/pg_hba.conf 
 ```
