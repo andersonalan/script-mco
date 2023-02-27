@@ -56,7 +56,9 @@ Clicando no botão `Generate` a calculadora irá mostrar os parâmetros ao lado 
 A seguir abrir arquivo `postgresql.conf` localizado em `/etc/postgresql/15/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros com o comando:
 
 >lembrando de estar em usuário root
-
+```
+sudo su
+```
 ```
 nano /etc/postgresql/15/main/postgresql.conf
 ```
@@ -105,7 +107,9 @@ nano /etc/postgresql/15/main/pg_hba.conf
 > Para comentar a linha adicionar o hashtag no início da linha conforme o exemplo abaixo:  
 >#local all all peer
 
-Realizada a alteração necessário reiniciar o **postgres** utilizando o **systemctl restart**:
+>Finalizadas as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar. 
+
+Após realizar a alteração de conexão necessário reiniciar o **postgres** utilizando o **systemctl restart**:
 ```
 systemctl restart postgres
 ```
