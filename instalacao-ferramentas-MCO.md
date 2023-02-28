@@ -103,15 +103,16 @@ Acessar a pasta `pg_hba.conf` através do programa `nano` utilizando o comando a
 ```
 nano /etc/postgresql/15/main/pg_hba.conf 
 ```
-> Comentar a linha abaixo da "Database administrative login by Unix domain socket".  
-> Para comentar a linha adicionar o hashtag no início da linha conforme o exemplo abaixo:  
->#local all all peer
+> Alterar de modo peer para scram-sha-256 a linha abaixo da "Database administrative login by Unix domain socket" e linha "Unix domain socket connections only"  
+> Conforme o exemplo abaixo:  
+>local all postgres     scram-sha-256
+>local all all          scram-sha-256
 
 >Finalizadas as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar. 
 
 Após realizar a alteração de conexão necessário reiniciar o **postgres** utilizando o **systemctl restart**:
 ```
-systemctl restart postgres
+systemctl restart postgresql
 ```
 A partir de agora para acessar o **PostgreSQL** será necessário inserir a senha anteriormente criada.  
 Utilizar o comando abaixo e em seguida a insira a senha:
@@ -143,40 +144,41 @@ ___
 
 Antes de iniciar a instalação atualizar o gerenciador de pacotes com o comando:
 ```
-sudo apt updade
+sudo apt update
 ```
 Criar o diretório de instalação do tomcat através dos comandos a seguir.
+>Lembrando de estar em modo root.
 ```
-sudo mkdir -p /applications/installers
+mkdir -p /applications/installers
 ```
 Acessar o diretório criado através do comando:
 ```
-sudo cd /applications/installers/
+cd /applications/installers/
 ```
 Baixar o instalador `.tar.gz` através do comando `wget` junto ao link do download:  
 
 >Lembrando que precisa estar na pasta `/applications/installers` para baixar o instalador.
 
 ```
-sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.21/bin/apache-tomcat-9.0.21.tar.gz
+wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.21/bin/apache-tomcat-9.0.21.tar.gz
 ```
 Extrair o tomcat no diretório criado com o comando:
 ```
-sudo tar -xvzf apache-tomcat-9.0.21.tar.gz
+tar -xvzf apache-tomcat-9.0.21.tar.gz
 ```
 Alterar o nome do arquivo:
 >Como exemplo utilizei o nome "tomcat"
 ```
-sudo mv /applications/installers/apache-tomcat-9.0.21 /applications/installers/tomcat 
+mv /applications/installers/apache-tomcat-9.0.21 /applications/installers/tomcat 
 ```
 Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` dentro da pasta `/etc/systemd/system` através do seguinte comando:
 
 ```
-sudo nano /etc/systemd/system/tomcat.service
+nano /etc/systemd/system/tomcat.service
 ```
 Para o próximo passo será necessário saber o caminho do `java 8` e para isso utilizar o comando a seguir:
 ```
-sudo update-alternatives --config java
+update-alternatives --config java
 ```
 Abaixo segue o modelo do arquivo:
 >Lembrando que caso o caminho das variáveis de ambiente esteja diferente precisa alterar o caminho no arquivo.
