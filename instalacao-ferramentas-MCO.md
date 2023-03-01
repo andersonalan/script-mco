@@ -2,14 +2,20 @@
 
 Tutorial básico para instalação das ferramentas necessárias para a instalação do sistema MCO no ambiente `Linux`
 
-Iniciar o ubuntuserver e executar o comando `apt update` para atualizar a lista de pacotes
+Requisitos básicos necessários:
+- Disponibilidade de um servidor `Linux Ubuntu` (independente da versão);
+- Acesso ao servidor `Linux Ubuntu` via o comando `ssh` ou diretamente do servidor; 
+
+Após iniciar o servidor `Ubuntu` e executar o comando `apt update` para atualizar a lista de pacotes
 ```
-sudo apt updade
+sudo apt uptade
 ```
 Em seguida atualizar os pacotes
 ```
-sudo apt upgrade
+sudo apt upgrade -y
 ```
+Finalizado a etapa anterior é possível que seja solicitado o reinicio do serviço.
+
 ___
 
 ## Primeiro passo - Instalando PostgreSQL
@@ -71,7 +77,7 @@ nano /etc/postgresql/15/main/postgresql.conf
 - checkpoint_completion_target = 0.9
 - wal_buffers = 16MB
 - default_statistics_target = 100
-- random_page_cost = 4
+- random_page_cost = 1.1
 - effective_io_concurrency = 2
 - work_mem = 1310kB
 - min_wal_size = 1GB
@@ -79,7 +85,7 @@ nano /etc/postgresql/15/main/postgresql.conf
 
 >Com o aquivo `postgres.conf` aberto utilize o **Ctrl W** para localizar os parâmetros.  
 >Caso o parâmetro esteja comentado com hashtag `#` remover a hashtag `#`.  
->Finalizadas as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar.  
+>Finalizadas as alterações, executar o comando **Ctrl O** e **Enter** para salvar e **Ctrl X** para fechar.  
 ___
 
 #### Ajuste de conexões
@@ -103,12 +109,15 @@ Acessar a pasta `pg_hba.conf` através do programa `nano` utilizando o comando a
 ```
 nano /etc/postgresql/15/main/pg_hba.conf 
 ```
-> Alterar de modo peer para scram-sha-256 a linha abaixo da "Database administrative login by Unix domain socket" e linha "Unix domain socket connections only"  
-> Conforme o exemplo abaixo:  
->local all postgres     scram-sha-256
->local all all          scram-sha-256
 
->Finalizadas as alterações, executar o comando **Ctrl O** para salvar e **Ctrl X** para fechar. 
+>Com o arquivo aberto localizar a linha "Database administrative login by Unix domain socket" e alterar o campo da linha abaixo de peer para scram-sha-256   
+>Conforme o exemplo abaixo:  
+>local all postgres scram-sha-256  
+>
+>E localizar a linha abaixo da linha "Unix domain socket connections only"  
+>local all all scram-sha-256
+
+>Finalizadas as alterações, executar o comando **Ctrl O** e **Enter** para salvar e **Ctrl X** para fechar. 
 
 Após realizar a alteração de conexão necessário reiniciar o **postgres** utilizando o **systemctl restart**:
 ```
@@ -120,7 +129,10 @@ Utilizar o comando abaixo e em seguida a insira a senha:
 psql -U postgres --password
 ```
 Caso o acesso ao prompt do postgres ocorra, então as alterações foram um sucesso, caso contrário, refaça os passos acima.  
-
+Sair do `prompt Postgres` com o comando `\q`:
+```
+\q
+```
 A instalação do PostgreSQL está completa!
 ___
 
@@ -128,11 +140,11 @@ ___
 
 Antes de iniciar a instalação atualize o gerenciador de pacotes com o comando:
 ```
-sudo apt updade
+sudo apt update
 ```
 Instalar o Java Development Kit (JDK), através do comando a seguir:
 ```
-sudo apt install openjdk-8-jdk-headless
+sudo apt install openjdk-8-jdk-headless -y
 ```
 Para confirmar a instalação executar os comandos `java -version` e `javac -version`.
 
@@ -171,16 +183,15 @@ Alterar o nome do arquivo:
 ```
 mv /applications/installers/apache-tomcat-9.0.21 /applications/installers/tomcat 
 ```
-Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` dentro da pasta `/etc/systemd/system` através do seguinte comando:
-
-```
-nano /etc/systemd/system/tomcat.service
-```
 Para o próximo passo será necessário saber o caminho do `java 8` e para isso utilizar o comando a seguir:
 ```
 update-alternatives --config java
 ```
-Abaixo segue o modelo do arquivo:
+Criar o arquivo `tomcat.service` necessário para a inicialização do gerenciador de serviços `systemctl` dentro da pasta `/etc/systemd/system` através do seguinte comando:
+```
+nano /etc/systemd/system/tomcat.service
+```
+Abaixo segue o modelo do arquivo, `copiar` o modelo e `colar` dentro do `tomcat.service` pelo programa `nano`:
 >Lembrando que caso o caminho das variáveis de ambiente esteja diferente precisa alterar o caminho no arquivo.
 ```
 [Unit]
@@ -208,14 +219,14 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
->Finalizando as alterações no arquivo, **Ctrl O** para salvar e **Ctrl X** para fechar.
+>Finalizando as alterações no arquivo, **Ctrl O** e **Enter** para salvar e **Ctrl X** para fechar.
 
 Executar o `systemctl` para habilitar o serviço de inicialização, e para isso utilizar o comando `enable` e depois iniciar com o comando `start`.  
 Utilizar o `systemctl daemon-reload` para atualizar as informações do `tomcat.service`.
 ```
 systemctl daemon-reload
 ```
-Habilitar o `enable` utilizando o comando:
+Habilitar o tomcat via `enable` utilizando o comando:
 ```
 systemctl enable tomcat
 ```
