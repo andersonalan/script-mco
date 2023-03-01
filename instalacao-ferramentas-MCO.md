@@ -8,7 +8,7 @@ Requisitos básicos necessários:
 
 Após iniciar o servidor `Ubuntu` e executar o comando `apt update` para atualizar a lista de pacotes
 ```
-sudo apt uptade
+sudo apt update
 ```
 Em seguida atualizar os pacotes
 ```
@@ -50,13 +50,13 @@ Ajustar as configurações de memória do **postgres**, acessando a calculadora 
 > Como exemplo utilizei os parâmetros abaixo, extraindo a partir da VM do ubuntuserver.
 
 Parameters of your system
-- DB version 15
-- OS Type Linux
-- DB Type Mixed type of application
-- Total Memory (RAM) 2GB
-- Number of CPUs 2
-- Number of Connections 100
-- Data Storage SSD storage
+- DB version = 15
+- OS Type = Linux
+- DB Type = Mixed type of application
+- Total Memory (RAM) = 2GB
+- Number of CPUs = 2
+- Number of Connections = 100
+- Data Storage = SSD storage
 
 Clicando no botão `Generate` a calculadora irá mostrar os parâmetros ao lado direito a serem utilizados.
 A seguir abrir arquivo `postgresql.conf` localizado em `/etc/postgresql/15/main/postgresql.conf` e através do programa `nano` realizar a alteração dos parâmetros com o comando:
