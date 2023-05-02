@@ -84,6 +84,7 @@ Environment=CATALINA_PID=/marconsoft/tomcat/temp/tomcat.pid
 Environment=CATALINA_HOME=/marconsoft/tomcat/
 Environment='CATALINA_OPTS=-Xms512M -Xmx1G -Djava.net.preferIPv4Stack=true'
 Environment='JAVA_OPTS=-Djava.awt.headless=true'
+Environment='CAMINHO_ARQUIVOS_CONFIGURACAO_MCO_8080=/marconsoft/configuration/mco'
 
 ExecStart=/marconsoft/tomcat/bin/startup.sh
 ExecStop=/marconsoft/tomcat/bin/shutdown.sh
@@ -96,6 +97,30 @@ Restart=always
 WantedBy=multi-user.target
 ```
 >Finalizando as alterações no arquivo, **Ctrl O** e **Enter** para salvar e **Ctrl X** para fechar.
+
+Deletar o `ROOT` padrão e demais diretórios da pasta `webapps`:
+```
+sudo rm -r /marconsoft/tomcat/webapps/*
+```
+
+Extrair o `ROOT.war` do diretório de implantação para o diretório `webapps` do tomcat
+```
+sudo unzip template/mco/application/ROOT.war -d /marconsoft/tomcat/webapps/ROOT
+```
+Criar o diretório de `configuração`:
+
+```
+mkdir -p /marconsoft/configuration/tomcat
+```
+Copiar todos os arquivos de configuração para o diretório `configuration`:
+```
+mv /template/mco/config/* /marconsoft/configuration/tomcat
+```
+Substituir o arquivo `server.xml` padrão tomcat com o do diretório de implantação:
+
+```
+mv /template/tomcat/server.xml /marconsoft/tomcat/conf/server.xml
+```
 
 Executar o `systemctl` para habilitar o serviço de inicialização, e para isso utilizar o comando `enable` e depois iniciar com o comando `start`.  
 Utilizar o `systemctl daemon-reload` para atualizar as informações do `tomcat.service`.
